@@ -1,0 +1,13 @@
+Places_Data/
+VD_Data/
+VD_Data.zip
+View_Directions.zip
+__pycache__/
+.ipynb_checkpoints
+ND_Data/
+ND_Data.zip
+Pano_Data/
+Pano_Data.zip
+Pano_Data
+pano_detection_task/prelim_csv/
+
