@@ -9,3 +9,6 @@ def plot_hist(hist):
     plt.xlabel("epoch")
     plt.legend(["train", "validation"], loc="upper left")
     plt.show()
+
+
+    
