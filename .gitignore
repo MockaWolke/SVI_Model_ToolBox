@@ -12,6 +12,7 @@ Pano_Data
 pano_detection_task/prelim_csv/
 pano_detection_task/Training/training_results/
 view_directions_task/Training/training_results/
+night_detection_task/Relabeled_Test_DS/
 
 *.bat
 *.sh
