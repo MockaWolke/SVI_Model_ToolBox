@@ -16,7 +16,7 @@ def mapping(path,label):
 
 def get_ds(): 
     df = pd.read_csv("Relabeled_Test_DS/cleaned_data.csv",index_col=0)
-    image_paths = "Relabeled_Test_DS/" + df["Label"] +"/" + df.index + ".jgp"
+    image_paths = "Relabeled_Test_DS/" + df["Label"] +"/" + df.index + ".jpg"
     labels = df["Label"].apply(lambda x: int(x=="Night"))
     ds = tf.data.Dataset.from_tensor_slices((image_paths,labels))
     ds = ds.map(mapping)
