@@ -23,7 +23,7 @@ Additionally I randomly droped to Daytime images to get a more even Split for tr
 
 ![Split](night_detection_task/Imgs/Training_Split.jpg)
 
-For Training I resized the Images to 260 * 260.
+For Training I resized the Images to 260 x 260.
 
 The whole dataset for training, validataion & testing can be downloaded from [here.](https://drive.google.com/file/d/1q_aXvtj2RY_V9R5_murlmACs6So1bQxT/view?usp=sharing)
 
@@ -54,6 +54,6 @@ They consist mainly of Nighttime Images with very bright Streetlights. This is a
 
 The model can be loaded either [with the inital augmentation block](night_detection_task/final_model) or [without](night_detection_task/final_model_without_aug).
 
-Both models take an Input of 260 * 260.
+Both models take an Input of 260 x 260.
 
 
