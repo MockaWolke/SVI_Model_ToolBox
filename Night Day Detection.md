@@ -43,6 +43,9 @@ To get a good judgment of the model performance I manualy relabeled the Test Dat
 On this Dataset the Model achieved an accuracy of 97.62
 %.
 
+Some examplary predicitons:
+![Preds](night_detection_task/Imgs/Predictions.jpg)
+
 All of the 59 wrongly predicted Images can be found [here](night_detection_task/wrong_labels).
 
 They consist mainly of Nighttime Images with very bright Streetlights. This is also represented in the confusion Matrix: 
