@@ -7,7 +7,6 @@ import numpy as np
 import tensorflow as tf
 import tensorflow_datasets as tfds
 
-label_dict = {"Forward":0, "Backward":1,"Sideways":2}
 
 def get_csv():
     df = pd.read_csv("../view_directions_data.csv",index_col=0)
@@ -22,7 +21,7 @@ def mapping(path,label):
 
     image = tf.io.read_file(path)
     image = tf.io.decode_jpeg(image, channels=3)
-    label = tf.one_hot(label,3)
+    label = tf.one_hot(label,2)
     return image, label
 
 
@@ -35,7 +34,7 @@ def get_ds(df,batch_size, kind = "train"):
 
     image_paths = path + imgs
 
-    labels = df["view_direction"].map(label_dict)
+    labels = df["vd"].map(int)
 
     ds = tf.data.Dataset.from_tensor_slices((image_paths,labels))
 

@@ -55,7 +55,7 @@ def frozen_model(base,name,drop_rate,input_size):
 
     top_dropout_rate = drop_rate
     x = tf.keras.layers.Dropout(top_dropout_rate, name="top_dropout")(x)
-    outputs = tf.keras.layers.Dense(3, activation="softmax", name="pred",kernel_regularizer=tf.keras.regularizers.L2())(x)
+    outputs = tf.keras.layers.Dense(2, activation="softmax", name="pred",kernel_regularizer=tf.keras.regularizers.L2())(x)
 
     # Compile
     model = tf.keras.Model(inputs, outputs, name=name)
@@ -170,7 +170,7 @@ if __name__ == "__main__":
 
     model = eval(args.model)
     model = frozen_model(model, MODEL_NAME_STEM + "_Frozen", args.drop_rate,args.input_size)
-    model.compile(tf.keras.optimizers.Adam(args.initial_lr),loss =  tf.keras.losses.CategoricalCrossentropy(),metrics=["accuracy"])
+    model.compile(tf.keras.optimizers.Adam(args.initial_lr),loss =  tf.keras.losses.BinaryCrossentropy(),metrics=["accuracy"])
     callbacks = get_callbacks(model,lr_reduder=False,stop_patience=3)
 
 
@@ -187,7 +187,7 @@ if __name__ == "__main__":
     model = unfreeze_model(model,n_layers = args.n_layers)
     model._name = f"{MODEL_NAME_STEM}_All"
 
-    model.compile(tf.keras.optimizers.Adam(args.later_lr),loss = tf.keras.losses.CategoricalCrossentropy(),metrics=["accuracy"])
+    model.compile(tf.keras.optimizers.Adam(args.later_lr),loss = tf.keras.losses.BinaryCrossentropy(),metrics=["accuracy"])
     callbacks = get_callbacks(model,lr_reduder=True,stop_patience=10)
 
     hist2 = model.fit(train_ds,
