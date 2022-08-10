@@ -38,7 +38,7 @@ def get_ds(df,batch_size, kind = "train"):
     ds = tf.data.Dataset.from_tensor_slices((image_paths,labels))
 
     ds = ds.map(mapping)
-    ds = ds.batch(batch_size=batch_size, drop_remainder=True)
+    ds = ds.batch(batch_size=batch_size, drop_remainder= kind!='test')
     ds = ds.prefetch(tf.data.AUTOTUNE)
 
     return ds
