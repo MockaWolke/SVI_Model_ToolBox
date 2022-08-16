@@ -13,5 +13,7 @@ pano_detection_task/prelim_csv/
 pano_detection_task/Training/training_results/
 view_directions_task/Training/training_results/last_model/
 view_directions_task/Training/training_results/weights/
+
+*feather
 *.bat
 *.sh
