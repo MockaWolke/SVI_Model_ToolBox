@@ -12,23 +12,6 @@ def get_df():
     return train_df,val_df,test_df
 
 
-def write_cloud_data_frame():
-    
-    df = pd.read_feather("training.df").set_index("index")
-
-    path_to_train = {}
-
-    for paths, kind in df.iloc[:,[-4,-1]].values:
-
-        for p in paths:
-            path_to_train[p] = kind
-
-    paths = np.unique(np.concatenate(df["Paths"].values))
-    paths = pd.DataFrame(paths,columns=["Path"])
-    paths["ds_type"] = paths.Path.map(path_to_train)
-    paths["key"] = paths.Path.apply(lambda s: s[s.find("images/")+7:-4])
-    paths.to_feather("paths_ds.feather")
-
 def mapping(img1,img2,img3,img4,img5,label):
 
     img1 = tf.io.decode_jpeg(tf.io.read_file(img1), channels=3)
@@ -54,7 +37,7 @@ def get_ds(df,batch_size, kind = "train",colab = False):
         paths = np.array([[func(s) for s in row]  for row in paths])
     else:
         paths = "../../" + paths
-        
+
     labels = (df.view_direction == "Sideways").apply(int).values
 
     ds = tf.data.Dataset.from_tensor_slices((paths[:,0],paths[:,1],paths[:,2],paths[:,3],paths[:,4],labels))
