@@ -10,6 +10,9 @@ parser.add_argument('--df_path',type=str)
 parser.add_argument('--output_path',type=str)
 parser.add_argument('--input_size',type=int)
 parser.add_argument("--with_test",type=int,default=1)
+parser.add_argument("--direct_path",type=int,default=0)
+
+
 
 def mapping(path,key):
     global Image_shape
@@ -20,9 +23,12 @@ def mapping(path,key):
 
     return image, key
 
-def resize_data(df,path_out):
+def resize_data(df,path_out,direct_path):
 
-    image_paths = df["Path"] + "/images/" + df["key"] + ".jpg"
+    if direct_path:
+        image_paths = df["Path"]
+    else:
+        image_paths = df["Path"] + "/images/" + df["key"] + ".jpg"
 
     ds = tf.data.Dataset.from_tensor_slices((image_paths,df["key"]))
     ds = ds.map(mapping,num_parallel_calls=tf.data.AUTOTUNE)
@@ -35,7 +41,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    df = pd.read_csv(args.df_path)
+    if args.df_path[-3:] == "csv":  df = pd.read_csv(args.df_path)
+    else:                           df = pd.read_feather(args.df_path)
 
     if args.output_path not in os.listdir():
         os.makedirs(args.output_path)
@@ -53,14 +60,14 @@ if __name__ == "__main__":
 
     Image_shape = args.input_size
 
-    resize_data(train_df,f"{args.output_path}/train/")
-    resize_data(val_df,f"{args.output_path}/val/")
+    resize_data(train_df,f"{args.output_path}/train/",args.direct_path)
+    resize_data(val_df,f"{args.output_path}/val/",args.direct_path)
 
     if args.with_test:
         test_df = df.loc[df["ds_type"]=="test"]
-        resize_data(test_df,f"{args.output_path}/test/")
+        resize_data(test_df,f"{args.output_path}/test/",args.direct_path)
 
-    df.to_csv(f"{args.output_path}/data.csv")
+    df.reset_index.to_feather(f"{args.output_path}/data.feather")
 
 
 

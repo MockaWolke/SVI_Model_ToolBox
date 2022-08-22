@@ -11,7 +11,10 @@ Pano_Data.zip
 Pano_Data
 pano_detection_task/prelim_csv/
 pano_detection_task/Training/training_results/
-view_directions_task/Training/training_results/last_model/
-view_directions_task/Training/training_results/weights/
+view_directions_task_single_image/Training/training_results/last_model/
+view_directions_task_single_image/Training/training_results/weights/
+seq_data.zip
+view_directions_sequence/seq_data/
+*feather
 *.bat
 *.sh

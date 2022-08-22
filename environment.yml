@@ -66,6 +66,7 @@ dependencies:
     - dill==0.3.5.1
     - etils==0.7.1
     - flatbuffers==2.0
+    - feather-format==0.4.1
     - fonttools==4.34.4
     - gast==0.5.3
     - google-auth==2.10.0
@@ -114,3 +115,4 @@ dependencies:
     - werkzeug==2.2.2
     - wrapt==1.14.1
     - zipp==3.8.1
+    
