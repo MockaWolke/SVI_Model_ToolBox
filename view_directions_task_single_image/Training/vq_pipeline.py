@@ -19,7 +19,7 @@ parser.add_argument("--initial_lr",type=float ,default=1e-3)
 parser.add_argument("--later_lr",type=float ,default=1e-4)
 parser.add_argument("--testing",type=bool ,default=False)
 parser.add_argument("--input_size",type=int ,default=260)
-parser.add_argument("--seq_excemption",type=str ,default=None)
+parser.add_argument("--seq_excemption",type=bool ,default=None)
 
 img_augmentation = tf.keras.models.Sequential(
     [

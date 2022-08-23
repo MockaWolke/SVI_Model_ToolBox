@@ -53,11 +53,11 @@ def get_train_and_val(batch_size = 64,excemption = None):
         val_ds = get_ds(val_df,batch_size = batch_size,kind="val")
     else: 
         df = pd.read_feather("../../view_directions_sequence/training/cleaned_images.df").set_index("key")
-        df["local_path"] = df.local_path.appyl(lambda x: "../../view_directions_sequence" +x[2:])
+        df["local_path"] = df.local_path.apply(lambda x: "../../view_directions_sequence" +x[2:])
         train_df = df.loc[df.ds_type=="train"]
-        val_df = df.loc[df.ds_type=="val"]
-        train_ds = tf.data.Dataset.from_tensor_slices((train_df.local_path.values,(train_df.view_direction=="Sideways").apply(int).values)).map(mapping).batch(batch_size=batch_size, drop_remainder=True).prefetch(tf.data.AUTOTUNE)
-        val_ds = tf.data.Dataset.from_tensor_slices((val_df.local_path.values,(val_df.view_direction=="Sideways").apply(int).values)).map(mapping).batch(batch_size=batch_size, drop_remainder=True).prefetch(tf.data.AUTOTUNE)
+        val_df = df.loc[df.ds_type=="val"].copy().sample(frac =1)
+        train_ds = tf.data.Dataset.from_tensor_slices((train_df.local_path.values,(train_df.view_direction=="Sideways").apply(int).values)).map(mapping).batch(batch_size=batch_size, drop_remainder=True).shuffle(1000).prefetch(tf.data.AUTOTUNE)
+        val_ds = tf.data.Dataset.from_tensor_slices((val_df.local_path.values,(val_df.view_direction=="Sideways").apply(int).values)).map(mapping).batch(batch_size=batch_size, drop_remainder=True).shuffle(1000).prefetch(tf.data.AUTOTUNE)
 
     return train_ds,val_ds
 
