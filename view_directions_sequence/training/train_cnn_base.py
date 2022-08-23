@@ -59,7 +59,7 @@ def frozen_model(crop,name):
             weights='imagenet',
             input_tensor= x)
 
-    base.base.trainable = False
+    base.trainable = False
 
     x = tf.keras.layers.GlobalAveragePooling2D(name="avg_pool")(base.output)
     x = tf.keras.layers.BatchNormalization()(x)
