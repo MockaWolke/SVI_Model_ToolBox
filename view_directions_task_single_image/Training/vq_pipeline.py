@@ -19,7 +19,7 @@ parser.add_argument("--initial_lr",type=float ,default=1e-3)
 parser.add_argument("--later_lr",type=float ,default=1e-4)
 parser.add_argument("--testing",type=bool ,default=False)
 parser.add_argument("--input_size",type=int ,default=260)
-
+parser.add_argument("--seq_excemption",type=str ,default=None)
 
 img_augmentation = tf.keras.models.Sequential(
     [
@@ -153,7 +153,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
 
-    train_ds , val_ds = vd_generator.get_train_and_val(args.batch_size)
+    train_ds , val_ds = vd_generator.get_train_and_val(args.batch_size,excemption=args.seq_excemption)
     MODEL_NAME_STEM = args.name
     INITIAL_EPOCHS = args.initial_epochs
     LATER_EPOCHS = args.later_epochs

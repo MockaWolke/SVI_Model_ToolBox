@@ -20,6 +20,8 @@ view_directions_sequence/seq_data/
 *.bat
 *.sh
 
+
+**/hl/
 **/weights/
 **/logs/
 **/last_model
