@@ -27,10 +27,10 @@ def mapping(path,label):
     label = tf.one_hot(label,2)
     return image, label
 
-def get_ds(df):
+def get_ds(df,bs):
     ds = tf.data.Dataset.from_tensor_slices((df.local_path.values,(df.view_direction=="Sideways").apply(int).values))
 
-    ds = ds.map(mapping).shuffle(1000).prefetch(tf.data.AUTOTUNE).batch(32)
+    ds = ds.map(mapping).shuffle(1000).batch(bs).prefetch(tf.data.AUTOTUNE)
 
     return ds
 
@@ -159,8 +159,8 @@ if __name__ == "__main__":
     df = pd.read_feather("cleaned_images.df").set_index("key")
     train_df = df.loc[df.ds_type=="train"]
     val_df = df.loc[df.ds_type=="val"]
-    train_ds = get_ds(train_df)
-    val_ds = get_ds(val_df)
+    train_ds = get_ds(train_df,args.batch_size)
+    val_ds = get_ds(val_df,args.batch_size)
 
     MODEL_NAME_STEM = args.name
     INITIAL_EPOCHS = args.initial_epochs
