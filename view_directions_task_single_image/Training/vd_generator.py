@@ -21,7 +21,6 @@ def mapping(path,label):
 
     image = tf.io.read_file(path)
     image = tf.io.decode_jpeg(image, channels=3)
-    label = tf.one_hot(label,2)
     return image, label
 
 
@@ -52,12 +51,12 @@ def get_train_and_val(batch_size = 64,excemption = None):
         train_ds = get_ds(train_df,batch_size=batch_size,kind="train")
         val_ds = get_ds(val_df,batch_size = batch_size,kind="val")
     else: 
-        df = pd.read_feather("../../view_directions_sequence/training/cleaned_images.df").set_index("key")
+        df = pd.read_feather("../../view_directions_sequence/training/new_train_imgs.df").set_index("key")
         df["local_path"] = df.local_path.apply(lambda x: "../../view_directions_sequence" +x[2:])
-        train_df = df.loc[df.ds_type=="train"]
-        val_df = df.loc[df.ds_type=="val"].copy().sample(frac =1)
-        train_ds = tf.data.Dataset.from_tensor_slices((train_df.local_path.values,(train_df.view_direction=="Sideways").apply(int).values)).map(mapping).batch(batch_size=batch_size, drop_remainder=True).shuffle(1000).prefetch(tf.data.AUTOTUNE)
-        val_ds = tf.data.Dataset.from_tensor_slices((val_df.local_path.values,(val_df.view_direction=="Sideways").apply(int).values)).map(mapping).batch(batch_size=batch_size, drop_remainder=True).shuffle(1000).prefetch(tf.data.AUTOTUNE)
+        train_df = df.loc[df.ds_type=="train"].sample(frac=1)
+        val_df = df.loc[df.ds_type=="val"].copy()
+        train_ds = tf.data.Dataset.from_tensor_slices((train_df.local_path.values,(train_df.view_direction=="Sideways").apply(int).values)).map(mapping).batch(batch_size=batch_size, drop_remainder=True).shuffle(100).prefetch(tf.data.AUTOTUNE)
+        val_ds = tf.data.Dataset.from_tensor_slices((val_df.local_path.values,(val_df.view_direction=="Sideways").apply(int).values)).map(mapping).batch(batch_size=batch_size, drop_remainder=True).prefetch(tf.data.AUTOTUNE)
 
     return train_ds,val_ds
 

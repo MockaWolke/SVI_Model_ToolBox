@@ -24,13 +24,12 @@ def mapping(path,label):
 
     image = tf.io.read_file(path)
     image = tf.io.decode_jpeg(image, channels=3)
-    label = tf.one_hot(label,2)
     return image, label
 
 def get_ds(df,bs):
     ds = tf.data.Dataset.from_tensor_slices((df.local_path.values,(df.view_direction=="Sideways").apply(int).values))
 
-    ds = ds.map(mapping).shuffle(1000).batch(bs).prefetch(tf.data.AUTOTUNE)
+    ds = ds.map(mapping).batch(bs).prefetch(tf.data.AUTOTUNE)
 
     return ds
 

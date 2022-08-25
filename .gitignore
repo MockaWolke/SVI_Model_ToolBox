@@ -20,8 +20,9 @@ view_directions_sequence/seq_data/
 *.bat
 *.sh
 
-
+view_directions_sequence/training/tuner_run
 **/hl/
 **/weights/
 **/logs/
 **/last_model
+**tmp/

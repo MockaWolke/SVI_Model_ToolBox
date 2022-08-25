@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 def get_df():
-    df = pd.read_feather("cleaned_seqs.df").set_index("index")
+    df = pd.read_feather("new_train_seqs.df").set_index("index")
 
     train_df = df.loc[df["ds_type"]=="train"]
     val_df = df.loc[df["ds_type"]=="val"]
@@ -30,8 +30,8 @@ def mapping(img1,img2,img3,img4,img5,label):
 def get_ds(df,batch_size, kind = "train",colab = False): 
     assert kind in ["train","test","val"]
 
-
-    df = df.sample(frac=1).copy()
+    if kind == "train":
+        df = df.sample(frac=1).copy()
     func = lambda s: s[s.find("images/")+7:]
 
     if colab:
@@ -43,7 +43,8 @@ def get_ds(df,batch_size, kind = "train",colab = False):
     labels = (df.view_direction == "Sideways").apply(int).values
 
     ds = tf.data.Dataset.from_tensor_slices((paths[:,0],paths[:,1],paths[:,2],paths[:,3],paths[:,4],labels))
-    ds = ds.shuffle(200)
+    if kind == "train":
+        ds = ds.shuffle(200)
     ds = ds.map(mapping)
     ds = ds.batch(batch_size=batch_size, drop_remainder= kind!='test')
     ds = ds.prefetch(tf.data.AUTOTUNE)

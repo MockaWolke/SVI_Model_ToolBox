@@ -7,6 +7,7 @@ import os
 import argparse   
 import matplotlib.pyplot as plt
 
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--model',type=str)
 parser.add_argument('--drop_rate',type=float,default=0.2)
@@ -54,7 +55,7 @@ def frozen_model(base,name,drop_rate,input_size):
 
     top_dropout_rate = drop_rate
     x = tf.keras.layers.Dropout(top_dropout_rate, name="top_dropout")(x)
-    outputs = tf.keras.layers.Dense(2, activation="softmax", name="pred",kernel_regularizer=tf.keras.regularizers.L2())(x)
+    outputs = tf.keras.layers.Dense(1, activation="sigmoid", name="pred",kernel_regularizer=tf.keras.regularizers.L2())(x)
 
     # Compile
     model = tf.keras.Model(inputs, outputs, name=name)
@@ -128,7 +129,7 @@ def plotting(history,history_fine,name):
     plt.subplot(2, 1, 1)
     plt.plot(x,acc, label='Training Accuracy')
     plt.plot(x,val_acc, label='Validation Accuracy')
-    plt.ylim([0.85, 1])
+    plt.ylim([min(x), 1])
     plt.plot([initial_epochs-1,initial_epochs-1],
             plt.ylim(), label='Start Fine Tuning')
     plt.legend(loc='lower right')
@@ -149,6 +150,8 @@ def plotting(history,history_fine,name):
 
 
 if __name__ == "__main__":
+
+    tf.config.experimental.enable_tensor_float_32_execution(True)
     print("\n"*2,"Working Directory: ",os.getcwd(),"\n"*2)
     args = parser.parse_args()
     
@@ -160,7 +163,7 @@ if __name__ == "__main__":
 
     if args.testing:
         print("Testing")
-        train_ds = train_ds.take(2)
+        train_dY = train_ds.take(2)
         val_ds = val_ds.take(2)
         MODEL_NAME_STEM = MODEL_NAME_STEM + "_testing"
         INITIAL_EPOCHS = 2
