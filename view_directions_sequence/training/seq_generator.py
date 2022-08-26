@@ -46,7 +46,7 @@ def get_ds(df,batch_size, kind = "train",colab = False):
     if kind == "train":
         ds = ds.shuffle(200)
     ds = ds.map(mapping)
-    ds = ds.batch(batch_size=batch_size, drop_remainder= kind!='test')
+    ds = ds.batch(batch_size=batch_size, drop_remainder= kind=='train')
     ds = ds.prefetch(tf.data.AUTOTUNE)
 
     return ds
