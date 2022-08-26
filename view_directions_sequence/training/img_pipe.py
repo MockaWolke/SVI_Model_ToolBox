@@ -26,7 +26,7 @@ def build_aug(mode,inp_shape):
         case 1:
 
             m = tf.keras.models.Sequential([
-                        tf.keras.layers.Resize(inp_shape,inp_shape),
+                        tf.keras.layers.Resizing(inp_shape,inp_shape),
                         tf.keras.layers.RandomRotation(factor=0.15),
                         tf.keras.layers.RandomTranslation(height_factor=0.1, width_factor=0.1),
                         tf.keras.layers.RandomContrast(factor=0.1),
@@ -43,7 +43,6 @@ def build_aug(mode,inp_shape):
                         tf.keras.layers.RandomRotation(factor=0.25),
                         tf.keras.layers.RandomTranslation(height_factor=0.2, width_factor=0.2),
                         tf.keras.layers.RandomContrast(factor=0.2),
-                        tf.keras.layers.RandomBrightness(0.2),
                     ],
                     name=f"img_augmentation_{mode}")
 
@@ -146,7 +145,7 @@ def get_callbacks(warm_path,log_dir):
 
     callbacks.append(tf.keras.callbacks.EarlyStopping(
         monitor='val_accuracy',
-        patience=3,
+        patience=5,
         verbose=1,
         mode='auto'))
 
@@ -172,7 +171,7 @@ def plotting(history,history_fine,name):
     plt.subplot(2, 1, 1)
     plt.plot(x,acc, label='Training Accuracy')
     plt.plot(x,val_acc, label='Validation Accuracy')
-    plt.ylim([min(x), 1])
+    plt.ylim([0.8, 1])
     plt.plot([initial_epochs-1,initial_epochs-1],
             plt.ylim(), label='Start Fine Tuning')
     plt.legend(loc='lower right')
@@ -207,13 +206,13 @@ if __name__ == '__main__':
 
     if args.testing:
         print("Testing")
-        train_dY = train_ds.take(2)
+        train_ds = train_ds.take(2)
         val_ds = val_ds.take(2)
         MODEL_NAME_STEM = MODEL_NAME_STEM + "_testing"
         LATER_EPOCHS = 2
 
 
-    aug = build_aug(args.aug_mode,args.input_shape)
+    aug = build_aug(args.aug_mode,args.input_size)
     cnn = build_cnn(args.model, aug)
     model = build_model(pars,cnn)
 
@@ -234,7 +233,7 @@ if __name__ == '__main__':
     log_dir = f"training_results/logs/{MODEL_NAME_STEM}_Warm"
     os.makedirs(c_warm_path, exist_ok = True)
     os.makedirs(log_dir, exist_ok = True)
-    cbs = get_callbacks(MODEL_NAME_STEM,log_dir)
+    cbs = get_callbacks(c_warm_path,log_dir)
     hist2 = model.fit(train_ds, epochs = LATER_EPOCHS, validation_data=val_ds, callbacks = cbs)
 
     save_path = f"training_results/last_model/{MODEL_NAME_STEM}/model"
