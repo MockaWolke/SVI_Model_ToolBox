@@ -22,8 +22,6 @@ def mapping(img1,img2,img3,img4,img5,label):
 
     img_seq = tf.stack([img1,img2,img3,img4,img5])
 
-    label = tf.one_hot(label,2)
-
     return img_seq, label
 
 
