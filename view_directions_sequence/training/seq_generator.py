@@ -61,7 +61,7 @@ def get_train_and_val(batch_size = 64,colab = False):
 
 def get_test_ds(batch_size = 64,colab = False):
 
-    train_df,val_df,test_df = get_df()
+    test_df = pd.read_feather('test.df').set_index("index")
 
     test_ds = get_ds(test_df,batch_size=batch_size,kind="test",colab = colab)
 

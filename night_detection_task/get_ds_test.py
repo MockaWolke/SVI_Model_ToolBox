@@ -9,7 +9,6 @@ def mapping(path,label):
 
     image = tf.io.read_file(path)
     image = tf.io.decode_jpeg(image, channels=3)
-    label = tf.one_hot(label,2)
     return image, label
 
 
