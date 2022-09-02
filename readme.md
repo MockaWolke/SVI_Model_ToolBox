@@ -1,3 +1,9 @@
+<p align="center">
+  <img src="ual_logo.png" />
+</p>   
+
+<br />
+
 # SVI-labelling Training Repo
 
 This is the training notebook for https://github.com/ualsg/SVI-labelling.
