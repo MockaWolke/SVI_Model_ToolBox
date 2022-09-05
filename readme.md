@@ -10,4 +10,6 @@ This is the training notebook for https://github.com/ualsg/SVI-labelling.
 
 Here you can find all code that was used for training the different models.
 
+You can find the training data csv files [here](data).
+
 Most notably there is the folder [training_info](training_info), which holds descriptions of all training processes.
