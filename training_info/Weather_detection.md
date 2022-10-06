@@ -37,6 +37,6 @@ Confusion Matrix
 
 ## Models
 
-The model can be loaded [here](../weather/weathter_model/) (with the inital augmentation block).
+The model can be loaded [here](../weather/weather_model_weights) (with the inital augmentation block).
 
 
