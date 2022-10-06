@@ -26,3 +26,4 @@ view_directions_sequence/training/tuner_run
 **/logs/
 **/last_model
 **tmp/
+weather/weathter_model/*
