@@ -1,7 +1,15 @@
-# Work in Progress not important
+<p align="center">
+  <img src="ual_logo.png" />
+</p>   
 
+<br />
 
-# Street View Image View Direction Recognition
+# SVI-labelling Training Repo
 
-In this repo I used the [Mapillarly Places Dataset](https://www.mapillary.com/dataset/places) to collect Street View images with Metadata. I used this Metadata to train a model to detect whether its a [Panoramic Model](Pano_Detection.md), whether it's shot by [day or night](Night_Day_Detection.md) and the viewdirection of the model.
+This is the training notebook for https://github.com/ualsg/SVI-labelling.
 
+Here you can find all code that was used for training the different models.
+
+You can find the training data csv files [here](data).
+
+Most notably there is the folder [training_info](training_info), which holds descriptions of all training processes.
