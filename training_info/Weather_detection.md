@@ -27,16 +27,16 @@ I tried out Transfer Learning with EfficientNetV2B0 and it worked good enough on
 The Model achieved 97% Accuracy on the Test Dataset. 
 
 
-The wrong test predictions can be found [here](weather/false_predictions/)
+The wrong test predictions can be found [here](../weather/false_predictions/)
 
 
  
 Confusion Matrix
 
-![con](weather/Weather_Confusion_Matrix.jpg)
+![con](../weather/Weather_Confusion_Matrix.jpg)
 
 ## Models
 
-The model can be loaded [here](weather/weathter_model/) (with the inital augmentation block).
+The model can be loaded [here](../weather/weathter_model/) (with the inital augmentation block).
 
 
